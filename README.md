@@ -1,0 +1,3 @@
+# Ncatbot_plugin_template
+
+SakikoBot插件的模板，含有最小化的插件目录结构
