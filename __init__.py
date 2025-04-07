@@ -1,5 +1,4 @@
 # __init__.py
-# 这两处的 Template 一定记得修改！
-from .main import Template
+from .main import traininfo
 
-__all__ = ["Template"]
+__all__ = ["traininfo"]
