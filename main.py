@@ -33,7 +33,7 @@ if not os.path.exists(PLUGIN_ROOT/"output"):
 
 
 bot = CompatibleEnrollment  # 兼容回调函数注册器
-today = datetime.date.today()
+
 
 # 获取车次编号
 def get_traincode(train_no):
@@ -47,6 +47,18 @@ def get_traincode(train_no):
     else:
         print('No trains.')
         return False
+
+#获取车型信息
+def get_traintype(train):
+    data_raw = requests.get("https://api.rail.re/train/{}".format(train))
+    print(str(data_raw))
+    if str(data_raw) == "<Response [404]>":
+        return ""
+    else:
+        data = data_raw.json()   
+        traintype = data[0]["emu_no"][:-4]
+        print ("车型",traintype)
+        return traintype
 
 # 获取行程信息
 def get_journey(traincode):
@@ -101,6 +113,7 @@ class traininfo(BasePlugin):
             await self.api.post_group_msg(msg.group_id, text=message)
         else:
             station,arrive,leave,row,start,end,time=result
+            traintype = get_traintype(msg_text.upper())
             running_time = time.split(":")
             
             # 初始化画布
@@ -136,6 +149,7 @@ class traininfo(BasePlugin):
             img.paste(status_bar, (0, 0))   
 
             # 绘制车次和日期
+            today = datetime.date.today()
             font = ImageFont.truetype(font=PLUGIN_ROOT/"resources/SWISSCK.TTF" , size=90)
             idraw.text((90, 315), msg_text.upper()[0] , font = font , fill = color)
             font = ImageFont.truetype(font=PLUGIN_ROOT/"resources/SWISSCK.TTF" , size=60)
@@ -154,9 +168,10 @@ class traininfo(BasePlugin):
             else:
                 idraw.text((907, 343) , "普速" , font = font , fill = (255,255,255))
 
-            # 绘制始末站
+            # 绘制始末站和型号
             font = ImageFont.truetype(font=PLUGIN_ROOT/"resources/siyuan.otf" , size=35)
             idraw.text((80, 457) , start + " → " + end + " | " + "{}时{}分".format(running_time[0] , running_time[1]) , font = font , fill = (255,255,255))
+            idraw.text((990,457) , traintype , anchor="ra" , font = font , fill = (255,255,255))
 
 
             # 绘制小标题
