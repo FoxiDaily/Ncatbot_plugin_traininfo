@@ -20,7 +20,7 @@ _log = get_log()
 
 
 NAME = "traininfo"
-VERSION = "2.0.0"
+VERSION = "2.2.0"
 PLUGIN_ROOT = Path(__file__).parent
 
 # 准备正则表达式
@@ -97,13 +97,15 @@ class traininfo(BasePlugin):
         command = COMMAND_STYLE.search(raw_message).group(1)
         msg_text = MSG_TEXT_STYLE.search(raw_message).group(1).strip()
         # 检查命令是否有效
-        if command not in ("train"):
+        if command != "train":
             return None
         # 如果输入字符太多就拒绝处理
         if len(msg_text) > 7:
             await self.api.post_group_msg(msg.group_id, text="这还是国铁的车吗？检查一下车次信息叭~")
             return None
-        
+        if msg_text == "about":
+            await self.api.post_group_msg(msg.group_id, text="感谢使用train_info插件！这是一个用来获取实时铁路车次信息的群机器人插件。\n\n本插件基于NcatBot引擎，使用Python编写，基于MIT协议开源。\n\n开源代码：https://git.szzy.tech:14514/FXDaily/Ncatbot_plugin_traininfo\n\n开发者：FXDaily")
+            return None
         # 开始获取信息
         print("Getting train info of {}".format(msg_text))
         result = get_journey(get_traincode(msg_text.upper()))
