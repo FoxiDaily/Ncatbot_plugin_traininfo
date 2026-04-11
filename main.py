@@ -20,7 +20,7 @@ _log = get_log()
 
 
 NAME = "traininfo"
-VERSION = "2.2.0"
+VERSION = "5.0.1"
 PLUGIN_ROOT = Path(__file__).parent
 
 # 准备正则表达式
@@ -100,12 +100,12 @@ class traininfo(BasePlugin):
         # 如果输入字符太多就拒绝处理
         if len(msg_text) > 7:
             reply = "这还是国铁的车吗？检查一下车次信息叭~"
-            await self.api.qq.post_group_msg(event.group_id, text=reply)
+            await event.reply(reply)
             _log.info("回复：" + reply)
             return None
         if msg_text == "about":
             reply = "感谢使用train_info插件！这是一个用来获取实时铁路车次信息的群机器人插件。\n\n本插件基于NcatBot引擎，使用Python编写，基于MIT协议开源。\n\n开源代码：https://git.szzy.tech:14514/FXDaily/Ncatbot_plugin_traininfo\n\n开发者：FXDaily"
-            await self.api.qq.post_group_msg(event.group_id, text=reply)
+            await event.reply(reply)
             _log.info("回复：" + reply)
             return None
         # 开始获取信息
@@ -114,7 +114,7 @@ class traininfo(BasePlugin):
 
         if result is False:
             message = "未查询到相关信息，请检查车次是否正确~"
-            await self.api.qq.post_group_msg(event.group_id, text=message)
+            await event.reply(message)
         else:
             station, arrive, leave, row, start, end, time = result
             traintype = get_traintype(msg_text.upper())
@@ -191,7 +191,8 @@ class traininfo(BasePlugin):
             idraw.text((850, 650), leave, font=font, fill=(0, 0, 0))
             img.save(PLUGIN_ROOT / "output/train.png")
 
-            await self.api.qq.post_group_msg(event.group_id, image=str(PLUGIN_ROOT / "output/train.png"))
+            # 使用 event.reply() 自动引用原消息
+            await event.reply(image=str(PLUGIN_ROOT / "output/train.png"))
 
     async def on_load(self):
         """插件加载时执行的操作"""
