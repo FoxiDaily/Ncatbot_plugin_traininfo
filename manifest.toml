@@ -1,6 +1,7 @@
-[plugin]
+
 name = "traininfo"
-version = "5.0.1"
+version = "5.0.2"
+main = "main.py"
 description = "火车查询插件 - 获取实时铁路车次信息"
 author = "FXDaily"
 
