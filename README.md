@@ -37,14 +37,6 @@ ncatbot run
 /train G1234
 ```
 
-## ✨ 功能特性
-
-- ✅ 实时查询 12306 车次信息
-- ✅ 支持所有类型的列车（G/D/C/Z/T/K 等）
-- ✅ 显示完整的行程和站点信息
-- ✅ 友好的文本格式输出
-
-
 ## 📝 命令列表
 
 | 命令 | 说明 | 示例 |
@@ -62,12 +54,14 @@ ncatbot run
 ## 📄 许可证
 
 本项目基于 MIT 协议开源。
+请勿用于商业用途。
 
 ## 🙏 致谢
 
 - [Ncatbot5](https://github.com/ncatbot/NcatBot) - QQ 机器人框架
 - [12306](https://www.12306.cn/) - 车次数据源
-- [FoxiDaily/Ncatbot_plugin_traininfo](https://github.com/FoxiDaily/Ncatbot_plugin_traininfo) - 参考实现
+- [Bilibili@HXD1D0390](https://space.bilibili.com/1171186314/upload/opus) - 火车贴图
+- [RAIL.RE](rail.re) - 车型数据源
 
 ## 📮 反馈
 
@@ -75,4 +69,4 @@ ncatbot run
 
 ---
 
-**12306祝您旅途愉快！🚄**
+**反对直特换桶😡还我原色大列😡**
